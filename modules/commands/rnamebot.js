@@ -1,15 +1,15 @@
 module.exports.config = {
-	name: "rnamebox",
-	version: "1.0.0",
+	name: "rnamebot",
+	version: "1.0.1",
 	hasPermssion: 2,
 	credits: "CatalizCS",
 	description: "Đổi biệt danh của bot ở toàn bộ bot!",
 	commandCategory: "system",
-	usages: "rnamebox [Biệt danh cần đặt]",
+	usages: "[Biệt danh cần đặt]",
 	cooldowns: 20,
 };
 
-module.exports.run = async ({ event, api, __GLOBAL, args, Threads, client }) => {
+module.exports.run = async ({ event, api, args, Threads }) => {
     const custom = args.join(" "),
             allThread = await Threads.getAll(["threadID"]),
             idBot = api.getCurrentUserID();
@@ -27,8 +27,8 @@ module.exports.run = async ({ event, api, __GLOBAL, args, Threads, client }) => 
     }
     else {
         for (const idThread of allThread) {
-            const threadSetting = client.threadSetting.get(idThread.threadID) || {};
-            api.changeNickname(`[ ${(threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : __GLOBAL.settings.PREFIX} ] • ${(!__GLOBAL.settings.BOTNAME) ? "Made by CatalizCS and SpermLord" : __GLOBAL.settings.BOTNAME}`, idThread.threadID, idBot, (err) => (err) ? threadError.push(idThread.threadID) : '');
+            const threadSetting = global.client.threadData.get(idThread.threadID) || {};
+            api.changeNickname(`[ ${(threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX} ] • ${(!global.config.BOTNAME) ? "Made by CatalizCS and SpermLord" : global.config.BOTNAME}`, idThread.threadID, idBot, (err) => (err) ? threadError.push(idThread.threadID) : '');
             count+=1;
             await new Promise(resolve => setTimeout(resolve, 500));
         }

@@ -1,82 +1,72 @@
 /**
-* @author ProCoderMew
-* @warn Do not edit code or edit credits
-*/
-
+ * @author ProCoderMew
+ * @warn Do not edit code or edit credits
+ */
 module.exports.config = {
     name: "sortword",
-    version: "1.0.5",
+    version: "1.1.2",
     hasPermssion: 0,
     credits: "ProCoderMew",
-    description: "Sắp xếp lại 1 từ tiếng anh bị xáo trộn",
-    commandCategory: "game-sp",
+    description: "S\u1EAFp x\u1EBFp l\u1EA1i 1 t\u1EEB ti\u1EBFng anh b\u1ECB x\xE1o tr\u1ED9n",
+    commandCategory: "game",
     usages: "",
     cooldowns: 5,
     dependencies: {
-        "axios": ""
+        axios: ""
+    },
+    envConfig: {
+        APIKEY: ""
     }
-};
-
-module.exports.onLoad = function () {
-    if (typeof global['procodermew'] == "undefined") global['procodermew'] = new Object();
-    if (typeof global['procodermew']['sortword'] == "undefined") global['procodermew']['sortword'] = new Array();
 }
-
-module.exports.handleEvent = function({ api, event }) {
-    if (typeof global['procodermew']['sortword'] == "undefined") return;
-    const { threadID, body, senderID, messageID } = event;
-    if (global['procodermew']['sortword'].some(e => e.user == senderID)) {
-        var data = global['procodermew']['sortword'].find(e => e.user == senderID);
-        var index = global['procodermew']['sortword'].findIndex(e => e.user == senderID);
-        if (data.user == senderID && data.thread == threadID && body.toLowerCase() == data.correct.toLowerCase()) {
-            return api.sendMessage("Bạn đã sắp xếp chính xác.", threadID, () => {
-                global['procodermew']['sortword'].splice(index, 1);
-            }, messageID)
-        } else if (data.user == senderID && data.thread == threadID && body.toLowerCase() != data.correct.toLowerCase()) {
-            return api.sendMessage("Bạn sắp xếp sai rồi!\nĐáp án đúng là: " + data.correct, threadID, () => {
-                global['procodermew']['sortword'].splice(index, 1);
-            }, messageID);
-        }
+module.exports.onLoad = function() {
+    "undefined" == typeof global.procodermew && (global.procodermew = {}), "undefined" == typeof global.procodermew.sortword && (global.procodermew.sortword = [])
+}
+module.exports.handleEvent = function({ api: a, event: b }) {
+    if ("undefined" == typeof global.procodermew.sortword) return;
+    const { threadID: c, body: d, senderID: f, messageID: e } = b;
+    if (global.procodermew.sortword.some((a) => a.user == f)) {
+        var g = global.procodermew.sortword.find((a) => a.user == f),
+            h = global.procodermew.sortword.findIndex((a) => a.user == f);
+        if (g.user == f && g.thread == c && d.toLowerCase() == g.correct.toLowerCase()) return a.sendMessage("B\u1EA1n \u0111\xE3 s\u1EAFp x\u1EBFp ch\xEDnh x\xE1c.", c, () => {
+            global.procodermew.sortword.splice(h, 1)
+        }, e);
+        if (g.user == f && g.thread == c && d.toLowerCase() != g.correct.toLowerCase()) return a.sendMessage("B\u1EA1n s\u1EAFp x\u1EBFp sai r\u1ED3i!\n\u0110\xE1p \xE1n \u0111\xFAng l\xE0: " + g.correct, c, () => {
+            global.procodermew.sortword.splice(h, 1)
+        }, e)
     }
-};
-
-module.exports.run = async function({ api, event, args }) {
-    if (!typeof global['procodermew']['sortword'] == "undefined") global['procodermew']['sortword'] = new Array();
-    const axios = global.nodemodule["axios"];
-    const { threadID, senderID, messageID } = event;
-    var level, time;
-    switch (args[0]) {
+}
+module.exports.run = async function({ api: a, event: b, args: c }) {
+    const { APIKEY } = global.configModule.sortword;
+    "undefined" == !typeof global.procodermew.sortword && (global.procodermew.sortword = []);
+    const d = global.nodemodule.axios, { threadID: e, senderID: f, messageID: g } = b;
+    var h, i;
+    switch (c[0]) {
         case "easy":
-            level = "easy", time = 10;
+            h = "easy", i = 10;
             break;
         case "medium":
-            level = "medium", time = 15;
+            h = "medium", i = 15;
             break;
         case "hard":
-            level = "hard", time = 20;
+            h = "hard", i = 20;
             break;
         case "extreme":
-            level = "extreme", time = 25;
+            h = "extreme", i = 25;
             break;
         default:
-            level = "random", time = 10;
-            break;
+            h = "random", i = 10;
     }
-    var { data } = await axios.get("https://meewmeew.info/word/rw?level=" + level);
-    api.sendMessage(`Bạn đã chọn level ${level} với thời gian ${time}s.`, threadID, async () => {
-        api.sendMessage("Chuẩn bị.", threadID);
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        return api.sendMessage(data.random.join(", "), threadID, async () => {
-            global['procodermew']['sortword'].push({
-                user: senderID,
-                thread: threadID,
-                correct: data.correct
-            });
-            await new Promise(resolve => setTimeout(resolve, time * 1000));
-            if (global['procodermew']['sortword'].some(e => e.user == senderID)) {
-                var index = global['procodermew']['sortword'].findIndex(e => e.user == senderID);
-                api.sendMessage("Đã hết thời gian quy định!", threadID, () => global['procodermew']['sortword'].splice(index, 1), messageID);
+    var { data: j } = await d.get("https://meewmeew.info/word/rw?level=" + h + "&apikey=" + APIKEY);
+    a.sendMessage(`Bạn đã chọn level ${h} với thời gian ${i}s.`, e, async () => {
+        return a.sendMessage("Chu\u1EA9n b\u1ECB.", e),
+        await new Promise((a) => setTimeout(a, 2e3)),
+        a.sendMessage(j.random.join(", "), e, async () => {
+            if (global.procodermew.sortword.push({ user: f, thread: e, correct: j.correct }),
+                await new Promise((a) => setTimeout(a, 1e3 * i)),
+                global.procodermew.sortword.some((a) => a.user == f)) {
+                var b = global.procodermew.sortword.findIndex((a) => a.user == f);
+                a.sendMessage("\u0110\xE3 h\u1EBFt th\u1EDDi gian quy \u0111\u1ECBnh!", e, () => global.procodermew.sortword.splice(b, 1), g)
             }
-        });
-    }, messageID);
-}
+        })
+    }, g)
+};

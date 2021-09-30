@@ -3,7 +3,7 @@ module.exports.config = {
 	version: "1.0.0",
 	hasPermssion: 0,
 	credits: "Thanh dz",
-	description: "Random ảnh Misthy :))",
+	description: "Random ảnh Linh Ngọc Đàm :))",
 	commandCategory: "random-img",
 	usages: "lnd",
 	cooldowns: 5
@@ -13,7 +13,7 @@ module.exports.run = async ({ api, event }) => {
 	const axios = require('axios');
 	const request = require('request');
 	const fs = require("fs");
-	axios.get('https://linhngocdam.hungdz30cm.repl.co/').then(res => {
+	axios.get('https://linhngocdam.ocvat2810.repl.co/').then(res => {
 	let ext = res.data.data.substring(res.data.data.lastIndexOf(".") + 1);
 	let callback = function () {
 					api.sendMessage({

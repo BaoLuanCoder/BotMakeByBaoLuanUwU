@@ -1,13 +1,13 @@
 module.exports.config = {
-  name: "vnex",
-  version: "1.0.2",
-  hasPermssion: 0,
-  credits: "HungCho",
-  description: "Báo tin tức vnex !",
-  commandCategory: "news",
-  usages: "d", 
-  cooldowns: 0,
-  dependencies: {"axios": "","cheerio": ""}
+	name: "vnex",
+	version: "1.0.2",
+	hasPermssion: 0,
+	credits: "HungCho",
+	description: "Báo tin tức vnex !",
+	commandCategory: "news",
+	usages: "d",
+	cooldowns: 0,
+dependencies: {"axios": "","cheerio": ""}
 };
 
 module.exports.run = async function({ api, event, args, __GLOBAL,Currencies }) {
@@ -28,4 +28,4 @@ module.exports.run = async function({ api, event, args, __GLOBAL,Currencies }) {
         api.sendMessage(`Tin tức mới nhất\r\nThời gian đăng: ${time}\r\nTiêu đề: ${title}\r\n\nNội dung: ${description[0]}\r\nLiên kết: ${link}\r\n\n`,event.threadID,event.messageID)
         }
 }
-)} 
+)}

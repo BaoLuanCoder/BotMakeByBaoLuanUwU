@@ -2,9 +2,9 @@ module.exports.config = {
 	name: "rnamebox",
 	version: "1.0.0",
 	hasPermssion: 2,
-	credits: "JRt",
+	credits: "CatalizCS",
 	description: "Đổi biệt danh của toàn bộ nhóm",
-	commandCategory: "Nhóm",
+	commandCategory: "system",
 	usages: "[Biệt danh cần đặt]",
 	cooldowns: 20,
 };

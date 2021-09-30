@@ -4,7 +4,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "Mirai Team",
 	description: "Random ảnh chế :D",
-	commandCategory: "random-img",
+	commandCategory: "hình ảnh",
 	cooldowns: 1,
 	dependencies: {
 		"request": "",

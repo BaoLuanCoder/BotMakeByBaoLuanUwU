@@ -13,13 +13,13 @@ module.exports.onLoad = () => {
     const request = require("request");
     const dirMaterial = __dirname + `/noprefix/`;
     if (!fs.existsSync(dirMaterial + "noprefix")) fs.mkdirSync(dirMaterial, { recursive: true });
-    if (!fs.existsSync(dirMaterial + "ỏ.mp4")) request("https://video.xx.fbcdn.net/v/t42.3356-2/210918529_4165651716829975_2201208960152983099_n.mp4/video-1631343746.mp4?_nc_cat=103&ccb=1-5&_nc_sid=060d78&_nc_ohc=M3_1XwZE6YsAX9sCEh3&vabr=781845&_nc_ht=video.xx&oh=7a4d3235adc5584cecf47bb51a35993d&oe=613D536A&dl=1").pipe(fs.createWriteStream(dirMaterial + "ỏ.mp4"));
+    if (!fs.existsSync(dirMaterial + "ỏ.mp4")) request("https://video.xx.fbcdn.net/v/t42.3356-2/229709156_4238955582858100_3193249266531476284_n.mp4/video-1630049435.mp4?_nc_cat=104&ccb=1-5&_nc_sid=060d78&_nc_ohc=RHnKWxybdJoAX_Us1Gs&vabr=719953&_nc_ht=video.xx&oh=27f0c2c5cd744257f267468e16357aa8&oe=6129E198&dl=1 ").pipe(fs.createWriteStream(dirMaterial + "ỏ.mp4"));
 }
 module.exports.handleEvent = function({ api, event }) {
 	var { threadID, messageID } = event;
 	if (event.body.indexOf("Ỏ")==0 || (event.body.indexOf("ỏ")==0)){
 	  var msg = {
-				body: "Hôm nay trời đẹp thế nhờ..!!",
+				body: "Bảo Luân đẹp trai thế nhỡ....!",
 				attachment: fs.createReadStream(__dirname + `/noprefix/ỏ.mp4`)
 			}
 			return api.sendMessage(msg, threadID, messageID);

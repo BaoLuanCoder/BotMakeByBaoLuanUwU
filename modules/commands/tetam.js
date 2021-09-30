@@ -1,11 +1,11 @@
 module.exports.config = {
-  name: "tetam",
-  version: "1.0.0",
-  hasPermssion: 0,
-  credits: "CatalizCS",
-  description: "Đếm ngược Tết âm lịch",
-  commandCategory: "other",
-  cooldowns: 5
+	name: "tetam",
+	version: "1.0.0",
+	hasPermssion: 0,
+	credits: "Hoài Bảo",
+	description: "Đếm ngược tới Tết Âm lịch",
+	commandCategory: "other",
+	cooldowns: 5
 }
 
 module.exports.run = function ({ event, api }) {
@@ -15,5 +15,5 @@ module.exports.run = function ({ event, api }) {
     const hours = Math.floor( (t/(1000*60*60)) % 24 );
     const days = Math.floor( t/(1000*60*60*24) );
 
-    return api.sendMessage(`「Thời Gian Còn Lại Cho Tết âm Lịch」\n» ${days} ngày ${hours}  tiếng ${minutes}  phút ${seconds} giây «`, event.threadID, event.messageID);
+    return api.sendMessage(`「Thời gian còn lại cho Tết Âm lịch」\n» ${days} ngày ${hours} tiếng ${minutes} phút ${seconds} giây «`, event.threadID, event.messageID);
 }

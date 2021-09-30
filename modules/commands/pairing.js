@@ -4,7 +4,7 @@ module.exports.config = {
   hasPermssion: 0,
   credits: "MewMew",
   description: "Tìm Kiếm Nửa Kia Của Bạn",
-  commandCategory: "BOXCHAT",
+  commandCategory: "Hình ảnh",
   usages: "[pairing/boy/girl]",
   cooldowns: 20
 }

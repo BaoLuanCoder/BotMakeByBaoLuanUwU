@@ -2,9 +2,9 @@ module.exports.config = {
 	name: "roll",
 	version: "1.0.0",
 	hasPermssion: 0,
-	credits: "JRT",
+	credits: "Mirai Team",
 	description: "Random một con số bất kì trong một khoảng",
-	commandCategory: "Game",
+	commandCategory: "other",
 	cooldowns: 5
 };
 

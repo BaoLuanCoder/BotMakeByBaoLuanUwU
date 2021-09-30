@@ -2,9 +2,9 @@ module.exports.config = {
 	name: "random", // Tên lệnh, được sử dụng trong việc gọi lệnh
 	version: "1.0.0", // phiên bản của module này
 	hasPermssion: 0, // Quyền hạn sử dụng, với 0 là toàn bộ thành viên, 1 là quản trị viên trở lên, 2 là admin/owner
-	credits: "BerVer", // Công nhận module sở hữu là ai
+	credits: "JRT", // Công nhận module sở hữu là ai
 	description: "random số theo giới hạn max min", // Thông tin chi tiết về lệnh
-	commandCategory: "group", // Thuộc vào nhóm nào
+	commandCategory: "Game", // Thuộc vào nhóm nào
 	usages: "random [min] [max]", // Cách sử dụng lệnh
 	cooldowns: 5, // Thời gian một người có thể lặp lại lệnh
 	dependencies: {"random":""}, //Liệt kê các package module ở ngoài tại đây để khi load lệnh nó sẽ tự động cài!
@@ -24,7 +24,7 @@ module.exports.config = {
 			key: 'max',
 			prompt: 'Số kết thúc',
 			type: 'Số liệu',
-			example: '100'
+			example: '1000'
 		}
 	],
 	envConfig: {

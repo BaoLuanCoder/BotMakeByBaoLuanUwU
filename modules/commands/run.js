@@ -1,6 +1,6 @@
 module.exports.config = {
 	name: "run",
-	version: "1.0.1",
+	version: "1.0.2",
 	hasPermssion: 2,
 	credits: "Mirai Team",
 	description: "running shell",
@@ -16,8 +16,8 @@ module.exports.run = async function({ api, event, args, Threads, Users, Currenci
 	const eval = require("eval");
 	const output = function (a) {
 		if (typeof a === "object" || typeof a === "array") {
-			if (Object.keys(a).length != 0) a = JSON.stringify(a);
-			else a = "done!";
+			if (Object.keys(a).length != 0) a = JSON.stringify(a, null, 4);
+			else a = "";
 		}
 
 		if (typeof a === "number") a = a.toString();

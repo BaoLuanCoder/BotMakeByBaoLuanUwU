@@ -2,7 +2,7 @@ module.exports.config = {
 	name:"uptime",
 	version: "1.0.0",
 	hasPermssion: 0,
-	credits: "HelyT",
+	credits: "DuyVuong",
 	description: "Random ảnh theo api - uptime",
 	commandCategory: "system",
 	cooldowns: 3
@@ -23,14 +23,14 @@ const time = process.uptime(),
 		seconds = Math.floor(time % 60);
 	const pidusage = await global.nodemodule["pidusage"](process.pid);
 	const timeStart = Date.now();
-	axios.get('https://api.vangbanlanhat.tk/image?type=girl').then(res => {
-	let ext = res.data.data.substring(res.data.data.lastIndexOf(".") + 1);
+	axios.get('https://anime.ttktrungkien.repl.co').then(res => {
+    let ext = res.data.data.substring(res.data.data.lastIndexOf(".") + 1);
 	let callback = function () {
 					api.sendMessage({
-                                                body: `Bot của Thịnh đẹp trai đã hoạt động được ${hours} giờ ${minutes} phút ${seconds} giây ❤️沈.\n\n❯ Tổng người dùng: ${global.data.allUserID.length}\n❯ Tổng nhóm: ${global.data.allThreadID.length}\n❯ Cpu đang sử dụng: ${pidusage.cpu.toFixed(1)}\n❯ Ram đang sử dụng: ${byte2mb(pidusage.memory)}\n❯ Ping: ${Date.now() - timeStart}`,
-						attachment: fs.createReadStream(__dirname + `/cache/girl.${ext}`)
-					}, event.threadID, () => fs.unlinkSync(__dirname + `/cache/girl.${ext}`), event.messageID);
+                                                body: `🤖Bot của Bảo Luân đã hoạt động được ${hours} giờ ${minutes} phút ${seconds} giây <3.\n\n📝Tổng người dùng: ${global.data.allUserID.length}\n📈 Tổng nhóm: ${global.data.allThreadID.length}\n🔍 Cpu đang sử dụng: ${pidusage.cpu.toFixed(1)}\n⚠️ Ram đang sử dụng: ${byte2mb(pidusage.memory)}\n❗ Ping: ${Date.now() - timeStart}`,
+						attachment: fs.createReadStream(__dirname + `/cache/anh.${ext}`)
+					}, event.threadID, () => fs.unlinkSync(__dirname + `/cache/anh.${ext}`), event.messageID);
 				};
-				request(res.data.data).pipe(fs.createWriteStream(__dirname + `/cache/girl.${ext}`)).on("close", callback);
+				request(res.data.data).pipe(fs.createWriteStream(__dirname + `/cache/anh.${ext}`)).on("close", callback);
 			})
 }

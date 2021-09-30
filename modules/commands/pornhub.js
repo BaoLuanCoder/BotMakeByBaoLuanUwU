@@ -4,14 +4,11 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "MewMew",
 	description: "Comment trên pỏnhub ( ͡° ͜ʖ ͡°)",
-	commandCategory: "edit-img",
+	commandCategory: "Hình ảnh",
 	usages: "phub [text]",
 	cooldowns: 10,
-	dependencies: {
-		"canvas":"",
-		 "axios":"",
-		 "fs-extra":""
-	}
+dependencies: {"canvas": "",
+ "axios": ""}
 };
 
 module.exports.wrapText = (ctx, text, maxWidth) => {
@@ -43,11 +40,11 @@ module.exports.wrapText = (ctx, text, maxWidth) => {
 	});
 } 
 
-module.exports.run = async function({ api, event, args }) {
+module.exports.run = async function({ api, event, args, client, __GLOBAL }) {
 	let { senderID, threadID, messageID } = event;
-	const { loadImage, createCanvas } = global.nodemodule["canvas"];
-	const fs = global.nodemodule["fs-extra"];
-	const axios = global.nodemodule["axios"];
+	const { loadImage, createCanvas } = require("canvas");
+	const fs = require("fs-extra");
+	const axios = require("axios")
 	let avatar = __dirname + '/cache/avt.png';
 	let pathImg = __dirname + '/cache/porn.png';
 	var text = args.join(" ");
@@ -55,7 +52,7 @@ module.exports.run = async function({ api, event, args }) {
 	var linkAvatar = (await api.getUserInfo(senderID))[senderID].thumbSrc;
 	if (!text) return api.sendMessage("Nhập nội dung comment trên pỏnhub", threadID, messageID);
 	let getAvatar = (await axios.get(linkAvatar, { responseType: 'arraybuffer' })).data;
-	let getPorn = (await axios.get(`https://i.imgur.com/XrgnIyK.png`, { responseType: 'arraybuffer' })).data;
+	let getPorn = (await axios.get(`https://raw.githubusercontent.com/ProCoderMew/Module-Miraiv2/main/data/phub.png`, { responseType: 'arraybuffer' })).data;
 	fs.writeFileSync(avatar, Buffer.from(getAvatar, 'utf-8'));
 	fs.writeFileSync(pathImg, Buffer.from(getPorn, 'utf-8'));
 	let image = await loadImage(avatar);

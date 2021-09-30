@@ -4,7 +4,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "Thanh dz",
 	description: "Random ảnh chế nhưng của Việt Nam :))",
-	commandCategory: "random-img",
+	commandCategory: "hình ảnh",
 	usages: "memevn",
 	cooldowns: 5
 };
@@ -13,7 +13,7 @@ module.exports.run = async ({ api, event }) => {
 	const axios = require('axios');
 	const request = require('request');
 	const fs = require("fs");
-	axios.get('https://api.berver.tech/meme').then(res => {
+	axios.get('http://api.vangbanlanhat.tk/image?type=meme').then(res => {
 	let ext = res.data.data.substring(res.data.data.lastIndexOf(".") + 1);
 	let callback = function () {
 					api.sendMessage({

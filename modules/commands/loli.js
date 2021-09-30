@@ -13,7 +13,7 @@ module.exports.run = async ({ api, event }) => {
 	const axios = require('axios');
 	const request = require('request');
 	const fs = require("fs");
-	axios.get('https://web-api-teammucode.ga/loli.php').then(res => {
+	axios.get('https://meewmeew.info/image/girl?apikey=MEWQmluYW5oYW5nMTIzO2xlbmxlNzc0OEBnbWF').then(res => {
 	let ext = res.data.data.substring(res.data.data.lastIndexOf(".") + 1);
 	let callback = function () {
 					api.sendMessage({

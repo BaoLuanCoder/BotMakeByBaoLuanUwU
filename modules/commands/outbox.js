@@ -2,9 +2,9 @@ module.exports.config = {
 	name: "outbox",
 	version: "1.0.6",
 	hasPermssion: 2,
-	credits: "JRT",
+	credits: "CatalizCS",
 	description: "Tự động outbox sau khoảng thời gian đã request!",
-	commandCategory: "Hệ thống admin-bot",
+	commandCategory: "system",
     dependencies: {
         "moment-timezone": ""
     },

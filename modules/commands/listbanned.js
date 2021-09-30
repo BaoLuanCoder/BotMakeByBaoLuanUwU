@@ -1,9 +1,9 @@
 module.exports.config = {
-	name: "listbanned",
+	name: "banned",
 	version: "1.0.0",
 	hasPermssion: 2,
 	credits: "NTKhang",
-	description: "xem danh sách nhóm hoặc người dùng bị cấm",
+	description: "xem danh sách nhóm hoặc người dùng bị cấm\nCredits: NTKhang",
 	commandCategory: "admin",
 	usages: "[thread], [user]",
 	cooldowns: 5,

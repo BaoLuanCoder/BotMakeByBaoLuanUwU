@@ -2,7 +2,7 @@ module.exports.config = {
   name: "xinloivk",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "NTKhang",
+  credits: "NTKhang fix HTHB",
   description: "Xin lỗi vợ yêu 😢🥺",
   commandCategory: "group",
   usages: " @tag hoặc noprefix: xin lỗi vk iu @tag",

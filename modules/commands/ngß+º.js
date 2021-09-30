@@ -1,30 +1,42 @@
-const fs = require("fs");
 module.exports.config = {
-name: "Ngủ",
-    version: "1.0.0",
+    name: "ngủ",
+    version: "1.0.1",
     hasPermssion: 0,
+    credits: "HTHB",
     description: "",
-    commandCategory: "Không cần dấu lệnh",
-    usages: "noprefix",
-    cooldowns: 5,
+    commandCategory: "không cần dấu lệnh",
+    usages: "",
+    cooldowns: 0,
+    denpendencies: {
+        "fs": "",
+        "request": ""
+    }
 };
 module.exports.onLoad = () => {
     const fs = require("fs-extra");
     const request = require("request");
     const dirMaterial = __dirname + `/noprefix/`;
     if (!fs.existsSync(dirMaterial + "noprefix")) fs.mkdirSync(dirMaterial, { recursive: true });
-    if (!fs.existsSync(dirMaterial + "ngungon.mp4 ")) request("https://cdn.fbsbx.com/v/t59.2708-21/50349025_394656601363389_6823652437098758144_n.gif?_nc_cat=111&ccb=1-5&_nc_sid=041f46&_nc_ohc=1NB_jE89ijMAX_kpQer&_nc_ht=cdn.fbsbx.com&oh=b6d5f1a387d1c034e82d7ba30598d406&oe=613EEFB0").pipe(fs.createWriteStream(dirMaterial + "ngungon.mp4"));
+    if (!fs.existsSync(dirMaterial + "bye.gif")) request("https://data.whicdn.com/images/312923454/original.gif").pipe(fs.createWriteStream(dirMaterial + "bye.gif"));
 }
-module.exports.handleEvent = function({ api, event }) {
-    var { threadID, messageID } = event;
-    if (event.body.indexOf("Ngủ")==0 || (event.body.indexOf("Ngủ")==0)){
-      var msg = {
-                body: "chúc các bạn ngủ ngon",
-                attachment: fs.createReadStream(__dirname + `/noprefix/ngungon.mp4`)
+module.exports.handleEvent = async ({ event, api, Currencies,Users, args, utils, global, client }) => {
+    const fs = require("fs");
+    let name = await Users.getNameUser(event.senderID)
+    var msg = {
+                body: `Bye ${name} chúc bạn ngủ ngon ❤️`,
+                attachment: fs.createReadStream(__dirname + `/noprefix/bye.gif`)
             }
-            return api.sendMessage(msg, threadID, messageID);
-        }
+    if (event.body.toLowerCase() == "đi ngủ đây"){
+        return api.sendMessage(msg,event.threadID,event.messageID);}
+    if (event.body.toLowerCase() == "ngủ"){
+        return api.sendMessage(msg,event.threadID,event.messageID);}
+    if (event.body.toLowerCase() == "đi ngủ nha"){
+        return api.sendMessage(msg,event.threadID,event.messageID);}
+    if (event.body.toLowerCase() == "đi ngủ"){
+        return api.sendMessage(msg,event.threadID,event.messageID);}
+    if (event.body.toLowerCase() == "ngủ ngon"){
+        return api.sendMessage(msg,event.threadID,event.messageID);}
+        };
+module.exports.run = async ({ event, api, Currencies, args, utils }) => {
+return api.sendMessage("Dùng sai cách rồi lêu lêu",event.threadID)
     }
-    module.exports.run = function({ api, event, client, __GLOBAL }) {
-
-}

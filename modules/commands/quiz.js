@@ -1,10 +1,10 @@
 module.exports.config = {
 	name: "quiz",
 	version: "1.0.0",
-	credits: "JRT",
+	credits: "Mirai Team",
 	hasPermssion: 0,
 	description: "Trả lời câu hỏi (tiếng anh)",
-	commandCategory: "Game",
+	commandCategory: "game",
 	cooldowns: 5,
 	dependencies: {
 		"axios": ""

@@ -1,13 +1,13 @@
-﻿module.exports.config = {
-    name: "rule",
-    version: "1.0.1",
-    hasPermssion: 0,
-    credits: "CatalizCS",
-    description: "Tùy biến luật cho từng group",
-    commandCategory: "system",
-    usages: "[add/remove/all] [content/ID]",
-    cooldowns: 5,
-    dependencies: {
+module.exports.config = {
+	name: "rule",
+	version: "1.0.1",
+	hasPermssion: 0,
+	credits: "CatalizCS",
+	description: "Tùy biến luật cho từng group",
+	commandCategory: "system",
+	usages: "[add/remove/all] [content/ID]",
+	cooldowns: 5,
+	dependencies: {
         "fs-extra": "",
         "path": ""
     }

@@ -3,7 +3,7 @@ module.exports.config = {
 	version: "1.0.0",
 	hasPermssion: 0,
 	credits: "VĐT&NTH",
-	description: "Ca Dao Việt Nam",
+	description: "",
 	commandCategory: "News",
 	usages: "gai",
 	cooldowns: 5

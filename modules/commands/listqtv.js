@@ -2,9 +2,9 @@ module.exports.config = {
     name: 'listqtv',
     version: '1.0.0',
     hasPermssion: 0,
-    credits: 'JRT',
+    credits: 'manhIT',
     description: 'Danh sách quản trị viên Box',
-    commandCategory: 'Nhóm',
+    commandCategory: 'Group',
     usages: 'listqtv',
     cooldowns: 5,
     dependencies: []
@@ -23,12 +23,13 @@ module.exports.run = async function({ api, event, args, Users }) {
     var fs = global.nodemodule["fs-extra"];
     dem = 1;
     for (let i = 0; i < qtv2.length; i++) {
-        const name = (await Users.getData(qtv2[i].id)).name
+        const info = (await api.getUserInfo(qtv2[i].id));
+        const name = info[qtv2[i].id].name;
         listad += '' + `${dem++}` + '. ' + name + '\n';
     }
 
     api.sendMessage(
-        `📌Danh sách ${qtv} quản trị viên gồm:\n${listad}`,
+        `Danh sách ${qtv} quản trị viên gồm:\n${listad}`,
         event.threadID,
         event.messageID
     );

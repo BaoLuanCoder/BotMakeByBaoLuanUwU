@@ -1,28 +1,44 @@
+const request = require('request');
+const fs = require('fs')
+
 module.exports.config = {
- name: "pat",
- version: "1.0.1",
- hasPermssion: 0,
- credits: "JRT",
- description: "Ảnh", //nhập thứ bạn muốn
- commandCategory: "Hành động Anime", //Phần hiển thị trên help
- usages: "", //cách sử dụng
- cooldowns: 1, //thời gian chờ cách nhau
- 
- };
-   
-module.exports.run = async ({ api, event }) => {
- const axios = require('axios');
- const request = require('request');
- const fs = require("fs");
- axios.get('https://nekos.life/api/v2/img/pat').then(res => { //nhập api từ nekos.life
- let ext = res.data.url.substring(res.data.url.lastIndexOf(".") + 1);
- 
- let callback = function () {
-     api.sendMessage({
-      body: "Bae ngoan lắm ❤️",
-      attachment: fs.createReadStream(__dirname + `/cache/dog.${ext}`)
-     }, event.threadID, () => fs.unlinkSync(__dirname + `/cache/dog.${ext}`), event.messageID);
+  name: "vỗ",
+  version: "1.0.0",
+  hasPermssion: 0,
+  credits: "HTHB",
+  description: "vỗ người bạn tag",
+  commandCategory: "hình ảnh",
+  usages: "vỗ [tag người bạn vỗ]",
+  cooldowns: 5,
+  dependencies: {"request": "","fs": ""}
+};
+
+module.exports.run = function({
+  api,
+  event,
+  args,
+  client,
+  __GLOBAL
+}) {
+  var out = (msg) => api.sendMessage(msg, event.threadID, event.messageID);
+  if (!args.join(" ")) return out("Bạn chưa tag người bạn muốn vỗ");
+  else
+  return request('https://nekos.life/api/v2/img/pat', (err, response, body) => {
+    let picData = JSON.parse(body);
+    var mention = Object.keys(event.mentions)[0];
+    let getURL = picData.url;
+    let ext = getURL.substring(getURL.lastIndexOf(".") + 1);
+    let tag = event.mentions[mention].replace("@", "");
+    let callback = function() {
+      api.sendMessage({
+        body: tag + ", Ê!! ",
+        mentions: [{
+          tag: tag,
+          id: Object.keys(event.mentions)[0]
+        }],
+        attachment: fs.createReadStream(__dirname + `/cache/anime.${ext}`)
+      }, event.threadID, () => fs.unlinkSync(__dirname + `/cache/anime.${ext}`), event.messageID);
     };
-    request(res.data.url).pipe(fs.createWriteStream(__dirname + `/cache/dog.${ext}`)).on("close", callback);
-   })
+    request(getURL).pipe(fs.createWriteStream(__dirname + `/cache/anime.${ext}`)).on("close", callback);
+  });
 }

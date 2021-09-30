@@ -7,7 +7,7 @@ module.exports.config = {
 	commandCategory: "Media",
 	usages: "",
 	cooldowns: 1,
-	dependencies: ["request","fs","tiktok-scraper"]
+dependencies: {"request": "","fs": "","tiktok-scraper": ""}
 };
 
 module.exports.run = async({api, event, args}) => {

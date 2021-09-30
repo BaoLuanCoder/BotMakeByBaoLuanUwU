@@ -1,25 +1,23 @@
- module.exports.config = {
+const request = require("request");
+const fs = require("fs")
+const axios = require("axios")
+module.exports.config = {
   name: "japan",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "HungCho",
-  description: "Random ảnh girl",
-  commandCategory: "random-img",
+  credits: "Thanh Dz",
+  description: "Ảnh Gái Cosplay ",
+  commandCategory: "Hình Ảnh",
   usages: "japan",
   cooldowns: 5,
-  dependencies: {
-    "request":"",
-    "fs-extra":"",
-    "axios":""
+    dependencies: {"request": "",
+  "fs": "",
+  "axios": ""
   }
-    
 };
 
-module.exports.run = async({api,event,args,Users,Threads,Currencies}) => {
-const axios = global.nodemodule["axios"];
-const request = global.nodemodule["request"];
-const fs = global.nodemodule["fs-extra"];
-    var link = [
+module.exports.run = async({api,event,args,client,Users,Threads,__GLOBAL,Currencies}) => {
+	var link = [
 "https://i.imgur.com/fwUBSqv.jpg",
 "https://i.imgur.com/Yj6ZHiL.jpg",
 "https://i.imgur.com/WR5uNY8.jpg",
@@ -206,6 +204,6 @@ const fs = global.nodemodule["fs-extra"];
 "https://i.imgur.com/85pRryp.jpg",
 "https://i.imgur.com/FhC4jXa.jpg",
      ];
-     var callback = () => api.sendMessage({body:`Ảnh Cosplay\nSố ảnh: ${link.length}`,attachment: fs.createReadStream(__dirname + "/cache/1.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/1.jpg"));  
-      return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/1.jpg")).on("close",() => callback());
+   var callback = () => api.sendMessage({body:`Ảnh Cosplay Việt Nam \nSố Ảnh: ${link.length}`,attachment: fs.createReadStream(__dirname + "/cache/49.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/49.jpg"));  
+      return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/49.jpg")).on("close",() => callback());
    };

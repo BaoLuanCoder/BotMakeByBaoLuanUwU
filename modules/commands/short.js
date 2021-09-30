@@ -3,101 +3,176 @@ module.exports.config = {
 	version: "1.0.0",
 	hasPermssion: 0,
 	credits: "Mirai Team",
-	description: "tạo shortcut cho 1 tin nhắn",
+	description: "Phiên bản xịn hơn của short, recode by CatalizCS!",
 	commandCategory: "system",
-	usages: "[shortcut] => [text need shorcut]",
+    usages: "[all/delete/empty]",
 	cooldowns: 5,
 	dependencies: {
-		"fs-extra": ""
+		"fs-extra": "",
+        "path": ""
 	}
 }
 
-module.exports.onLoad = () => {
-	const { existsSync, writeFileSync } = global.nodemodule["fs-extra"];
-	if (!existsSync(__dirname + "/cache/shortcut.json")) writeFileSync(__dirname + "/cache/shortcut.json", JSON.stringify([]), 'utf-8');
-	return;
+module.exports.languages = {
+    "vi": {
+        "misingKeyword": "「Short」từ khóa nhận diện không được để trống!",
+        "shortcutExist": "「Short」Input đã tồn tại từ trước!",
+        "requestResponse": "「Short」Reply tin nhắn này để nhập câu trả lời khi sử dụng từ khóa",
+        "addSuccess": "「Short」Đã thêm thành công shortcut mới, dươi đây là phần tổng quát:\n- ID:%1\n- Input: %2\n- Output: %3",
+        "listShortcutNull": "「Short」hiện tại nhóm của bạn chưa có shortcut nào được set!",
+        "removeSuccess": "「Short」Đã xóa thành công!",
+        "returnListShortcut": "「Short」Dưới đây là toàn bộ shortcut nhóm có:\n[stt]/ [Input] => [Output]\n\n%1",
+        "requestKeyword": "「Short」Reply tin nhắn này để nhập từ khóa cho shortcut"
+    },
+    "en": {
+        "misingKeyword": "「Shortcut」Keyword must not be blank!",
+        "shortcutExist": "「Shortcut」Input has already existed!",
+        "requestResponse": "「Shortcut」Reply this message to import the answer when use keyword",
+        "addSuccess": "「Shortcut」Added new shortcut, here is result:\n- ID:%1\n- Input: %2\n- Output: %3",
+        "listShortcutNull": "「Shortcut」Your thread have no shortcut!",
+        "removeSuccess": "「Shortcut」Removed shortcut!",
+        "returnListShortcut": "「Shortcut」These are shortcuts of this thread:\n[stt]/ [Input] => [Output]\n\n%1",
+        "requestKeyword": "「Shortcut」Reply this message to import keyword for shortcut"
+    }
 }
 
-module.exports.handleEvent = function({ api, event }) {
-	const { readFileSync } = global.nodemodule["fs-extra"]; 
-	if (event.type !== "message_unsend" && event.body.length !== -1) {
-		const shortcut = JSON.parse(readFileSync(__dirname + "/cache/shortcut.json"));
-		if (shortcut.some(item => item.id == event.threadID)) {
-			const getThread = shortcut.find(item => item.id == event.threadID).shorts;
-			if (getThread.some(item => item.in == event.body)) {
-				const shortOut = getThread.find(item => item.in == event.body).out;
-				if (shortOut.indexOf(" | ") !== -1) {
-					const arrayOut = shortOut.split(" | ");
-					return api.sendMessage(`${arrayOut[Math.floor(Math.random() * arrayOut.length)]}`, event.threadID);
-				}
-				else return api.sendMessage(`${shortOut}`, event.threadID);
-			}
-		}
-	}
+module.exports.onLoad = function () {
+    try {
+        const { existsSync, writeFileSync, readFileSync } = global.nodemodule["fs-extra"];
+        const { resolve } = global.nodemodule["path"];
+        const path = resolve(__dirname, "cache", "shortcutdata.json");
+        if (!global.moduleData.shortcut) global.moduleData.shortcut = new Map();
+        if (!existsSync(path)) writeFileSync(path, JSON.stringify([]), "utf-8");
+        const data = JSON.parse(readFileSync(path, "utf-8"));
+        if (typeof global.moduleData.shortcut == "undefined") global.moduleData.shortcut = new Map();
+        for (const threadData of data) global.moduleData.shortcut.set(threadData.threadID, threadData.shortcuts);
+    } catch (e) { console.log(e) }
+    return;
 }
 
-module.exports.run = function({ api, event, args }) {
-	const { readFile, writeFile } = global.nodemodule["fs-extra"];
-	var { threadID, messageID } = event;
-	var content = args.join(" ");
-	if (!content) return api.sendMessage("Sai Format", threadID, messageID);
-	if (content.indexOf(`del`) == 0) {
-		let delThis = content.slice(4, content.length);
-		if (!delThis) return api.sendMessage("Không tìm thấy shortcut bạn cần xóa", threadID, messageID);
-		return readFile(__dirname + "/cache/shortcut.json", "utf-8", (err, data) => {
-			if (err) throw err;
-			var oldData = JSON.parse(data);
-			var getThread = oldData.find(item => item.id == threadID).shorts;
-			if (!getThread.some(item => item.in == delThis)) return api.sendMessage("Không tìm thấy shortcut bạn cần xóa", threadID, messageID);
-			getThread.splice(getThread.findIndex(item => item.in === delThis), 1);
-			writeFile(__dirname + "/cache/shortcut.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Đã xóa shortcut thành công!", threadID, messageID));
-		});
-	}
-	else if (content.indexOf(`all`) == 0)
-		return readFile(__dirname + "/cache/shortcut.json", "utf-8", (err, data) => {
-			if (err) throw err;
-			let allData = JSON.parse(data);
-			let msg = '';
-			if (!allData.some(item => item.id == threadID)) return api.sendMessage("Hiện tại không có shortcut nào", threadID, messageID);
-			if (allData.some(item => item.id == threadID)) {
-				let getThread = allData.find(item => item.id == threadID).shorts;
-				getThread.forEach(item => msg = '\n' + msg + item.in + ' -> ' + item.out);
-			}
-			if (!msg) return api.sendMessage("Hiện tại không có shortcut nào", threadID, messageID);
-			api.sendMessage("Sau đây là shortcuts có trong nhóm: " + msg, threadID, messageID);
-		});
-	else {
-		let narrow = content.indexOf(" => ");
-		if (narrow == -1) return api.sendMessage("Sai Format", threadID, messageID);
-		let shortin = content.slice(0, narrow);
-		let shortout = content.slice(narrow + 4, content.length);
-		if (shortin == shortout) return api.sendMessage("2 input và output giống nhau", threadID, messageID);
-		if (!shortin) return api.sendMessage("Thiếu input", threadID, messageID);
-		if (!shortout) return api.sendMessage("Thiếu output", threadID, messageID);
-		return readFile(__dirname + "/cache/shortcut.json", "utf-8", (err, data) => {
-			if (err) throw err;
-			var oldData = JSON.parse(data);
-			if (!oldData.some(item => item.id == threadID)) {
-				let addThis = {
-					id: threadID,
-					shorts: []
-				}
-				addThis.shorts.push({ in: shortin, out: shortout });
-				oldData.push(addThis);
-				return writeFile(__dirname + "/cache/shortcut.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Tạo shortcut thành công", threadID, messageID));
-			}
-			else {
-				let getShort = oldData.find(item => item.id == threadID);
-				if (getShort.shorts.some(item => item.in == shortin)) {
-					let index = getShort.shorts.indexOf(getShort.shorts.find(item => item.in == shortin));
-					let output = getShort.shorts.find(item => item.in == shortin).out;
-					getShort.shorts[index].out = output + " | " + shortout;
-					api.sendMessage("Shortcut đã tồn tại trong group này", threadID, messageID);
-					return writeFile(__dirname + "/cache/shortcut.json", JSON.stringify(oldData), "utf-8");
-				}
-				getShort.shorts.push({ in: shortin, out: shortout });
-				return writeFile(__dirname + "/cache/shortcut.json", JSON.stringify(oldData), "utf-8", (err) => (err) ? console.error(err) : api.sendMessage("Tạo shortcut thành công", threadID, messageID));
-			}
-		});
-	}
+module.exports.handleEvent = async function ({ event, api }) {
+    api.setOptions({selfListen:true});
+    const { threadID, messageID, body } = event;
+    if (!global.moduleData.shortcut) global.moduleData.shortcut = new Map();
+    if (!global.moduleData.shortcut.has(threadID)) return;
+    const data = global.moduleData.shortcut.get(threadID);
+
+    if (data.some(item => item.input == body)) {
+        const dataThread = data.find(item => item.input == body);
+        return api.sendMessage(dataThread.output, threadID, messageID);
+    }
+}
+
+module.exports.handleReply = async function ({ event, api, handleReply, getText }) {
+    if (handleReply.author != event.senderID) return;
+    const { readFileSync, writeFileSync } = global.nodemodule["fs-extra"];
+    const { resolve } = global.nodemodule["path"];
+    const { threadID, messageID, senderID, body } = event;
+    const name = this.config.name;
+
+    const path = resolve(__dirname, "cache", "shortcutdata.json");
+
+    switch (handleReply.type) {
+        case "requireInput": {
+            if (body.length == 0) return api.sendMessage(getText("misingKeyword"), threadID, messageID);
+            const data = global.moduleData.shortcut.get(threadID) || [];
+            if (data.some(item => item.input == body)) return api.sendMessage(getText("shortcutExist"), threadID, messageID);
+            api.unsendMessage(handleReply.messageID);
+            return api.sendMessage(getText("requestResponse"), threadID, function (error, info) {
+                return global.client.handleReply.push({
+                    type: "final",
+                    name,
+                    author: senderID,
+                    messageID: info.messageID,
+                    input: body
+                });
+            }, messageID);
+        }
+        case "final": {
+            const id = global.utils.randomString(10);
+            const readData = readFileSync(path, "utf-8");
+            var data = JSON.parse(readData);
+            var dataThread = data.find(item => item.threadID == threadID) || { threadID, shortcuts: [] };
+            var dataGlobal = global.moduleData.shortcut.get(threadID) || [];
+            const object = { id, input: handleReply.input, output: body || "empty" };
+
+            dataThread.shortcuts.push(object);
+            dataGlobal.push(object);
+
+            if (!data.some(item => item.threadID == threadID)) data.push(dataThread);
+            else {
+                const index = data.indexOf(data.find(item => item.threadID == threadID));
+                data[index] = dataThread;
+            }
+
+            global.moduleData.shortcut.set(threadID, dataGlobal);
+            writeFileSync(path, JSON.stringify(data, null, 4), "utf-8");
+
+            return api.sendMessage(getText("addSuccess", id, handleReply.input, body||"empty"), threadID, messageID);
+        }
+    }
+}
+
+module.exports.run = function ({ event, api, args, getText }) {
+    const { readFileSync, writeFileSync } = global.nodemodule["fs-extra"];
+    const { resolve } = global.nodemodule["path"];
+    const { threadID, messageID, senderID } = event;
+    const name = this.config.name;
+
+    const path = resolve(__dirname, "cache", "shortcutdata.json");
+
+    switch (args[0]) {
+        case "remove":
+        case "delete":
+        case "del":
+        case "-d": {
+            const readData = readFileSync(path, "utf-8");
+            var data = JSON.parse(readData);
+            const indexData = data.findIndex(item => item.threadID == threadID);
+            if (indexData == -1) return api.sendMessage(getText("listShortcutNull"), threadID, messageID);
+            var dataThread = data.find(item => item.threadID == threadID) || { threadID, shortcuts: [] };
+            var dataGlobal = global.moduleData.shortcut.get(threadID) || [];
+            var indexNeedRemove;
+
+            if (dataThread.shortcuts.length == 0) return api.sendMessage(getText("listShortcutNull"), threadID, messageID);
+
+            if (isNaN(args[1])) indexNeedRemove = args[1];
+            else indexNeedRemove = dataThread.shortcuts.findIndex(item => item.input == (args.slice(1, args.length)).join(" ") || item.id == (args.slice(1, args.length)).join(" "));
+            
+            dataThread.shortcuts.splice(indexNeedRemove, 1);
+            dataGlobal.splice(indexNeedRemove, 1);
+
+            global.moduleData.shortcut.set(threadID, dataGlobal);
+            data[indexData] = dataThread;
+            writeFileSync(path, JSON.stringify(data, null, 4), "utf-8");
+
+            return api.sendMessage(getText("removeSuccess"), threadID, messageID);
+        }
+
+        case "list":
+        case "all":
+        case "-a": {
+            const data = global.moduleData.shortcut.get(threadID) || [];
+            var array = [];
+            if (data.length == 0) return api.sendMessage(getText("listShortcutNull"), threadID, messageID);
+            else {
+                var n = 1;
+                for (const single of data) array.push(`${n++}/ ${single.input} => ${single.output}`);
+                return api.sendMessage(getText("returnListShortcut", array.join("\n")), threadID, messageID);
+            }
+        }
+
+        default: {
+            return api.sendMessage(getText("requestKeyword"), threadID, function (error, info) {
+                return global.client.handleReply.push({
+                    type: "requireInput",
+                    name,
+                    author: senderID,
+                    messageID: info.messageID
+                });
+            }, messageID);
+        }
+    }
+
+    
 }

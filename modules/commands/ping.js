@@ -1,6 +1,6 @@
-﻿module.exports.config = {
+module.exports.config = {
 	name: "ping",
-	version: "0.0.3",
+	version: "1.0.5",
 	hasPermssion: 1,
 	credits: "Mirai Team",
 	description: "tag toàn bộ thành viên",
@@ -9,13 +9,14 @@
 	cooldowns: 80
 };
 
-module.exports.run = async function({ api, event, args, Threads }) {
+module.exports.run = async function({ api, event, args }) {
 	try {
-		var listUserID = (await Threads.getInfo(event.threadID)).participantIDs;
 		const botID = api.getCurrentUserID();
-		listUserID = listUserID.filter(ID => ID != botID && ID != event.senderID);
-		var body = (args.length != 0) ? args.join(" ") : 'Vào tương tác đi mấy bạn ơi⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯⁯', mentions = [], index = 0;
-		
+		var listAFK, listUserID;
+		global.moduleData["afk"] && global.moduleData["afk"].afkList ? listAFK = Object.keys(global.moduleData["afk"].afkList || []) : listAFK = []; 
+		listUserID = event.participantIDs.filter(ID => ID != botID && ID != event.senderID);
+		listUserID = listUserID.filter(item => !listAFK.includes(item));
+		var body = (args.length != 0) ? args.join(" ") : "Đã xóa bạn ra khỏi nhóm", mentions = [], index = 0;
 		for(const idUser of listUserID) {
 			body = "‎" + body;
 			mentions.push({ id: idUser, tag: "‎", fromIndex: index - 1 });

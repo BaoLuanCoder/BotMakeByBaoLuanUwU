@@ -3,9 +3,9 @@ module.exports.config = {
   version: "1.0.0",
   hasPermssion: 0,
   credits: "Long LTD",
-  description: "­ghệ đít bự",
+  description: "Ghệ đích bự ngắm mỏi mắt",
   commandCategory: "Gái xinh",
-  usages: "[ngáº¯m ghá»‡ Ä‘Ă­ch bá»±]",
+  usages: "[ngắm ghệ đích bự]",
   cooldowns: 0,
   dependencies: {
     "request":"",
@@ -119,6 +119,6 @@ const fs = global.nodemodule["fs-extra"];
     "https://i.ibb.co/Db3LnbW/2.jpg",
     "https://i.ibb.co/Sd30dLy/3.jpg",
      ];
-     var callback = () => api.sendMessage({body:`Ghệ đít bự­: ${link.length}`,attachment: fs.createReadStream(__dirname + "/cache/gai.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/gai.jpg"));  
+     var callback = () => api.sendMessage({body:`Ghệ đích bự đây <3\nSố ảnh: ${link.length}`,attachment: fs.createReadStream(__dirname + "/cache/gai.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/gai.jpg"));  
       return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/gai.jpg")).on("close",() => callback());
    };

@@ -4,7 +4,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "CatalizCS",
 	description: "Phát video thông qua link YouTube hoặc từ khoá tìm kiếm",
-	commandCategory: "Info",
+	commandCategory: "media",
 	usages: "video [Text]",
 	cooldowns: 10,
 	dependencies: {

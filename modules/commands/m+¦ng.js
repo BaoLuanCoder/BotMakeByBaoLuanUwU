@@ -1,12 +1,12 @@
  /**
-* @author OreoZera
+* @author CallmeSun
 * @warn Vui lòng không sửa credits cảm ơn !
 */
 module.exports.config = {
   name: "mông",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "OreoZera",
+  credits: "CallmeSun",
   description: "Random Ảnh Mông Gái Cực Bổ Mắt ( Lưu Ý Đây Là Lệnh Ảnh 18+ Cân Nhắc Trước Khi Sử Dụng)",
   commandCategory: "Random-img",
   usages: "mông",

@@ -2,10 +2,10 @@ module.exports.config = {
     name: "search",
     version: "1.0.0",
     hasPermssion: 0,
-    credits: "JRT",
+    credits: "CatalizCS",
     description: "Tìm kiếm kết quả trên google!",
-    commandCategory: "Công cụ",
-    usages: "timkiem [Text]",
+    commandCategory: "info",
+    usages: "search [Text]",
     cooldowns: 5,
     dependencies: {
         "request":"",

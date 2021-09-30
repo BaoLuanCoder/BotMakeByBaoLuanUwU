@@ -2,11 +2,11 @@ module.exports.config = {
 	name: "misthy",
 	version: "1.0.0",
 	hasPermssion: 0,
-	credits: "JRT",
-	description: "Random ảnh Mẹ Mis :))",
-	commandCategory: "random-img",
+	credits: "Thanh dz",
+	description: "Random ảnh Misthy :))",
+	commandCategory: "hình ảnh",
 	usages: "misthy",
-	cooldowns: 3
+	cooldowns: 5
 };
 
 module.exports.run = async ({ api, event }) => {

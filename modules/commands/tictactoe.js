@@ -4,7 +4,7 @@ module.exports.config = {
 	hasPermssion: 0,
 	credits: "Mirai Team",
 	description: "Play tictactoe with AI",
-	commandCategory: "game-sp",
+	commandCategory: "game",
 	cooldowns: 5,
 	usages: "[random/x/o]"
 };

@@ -9,7 +9,7 @@ module.exports.config = {
 }
 
 module.exports.run = function ({ event, api }) {
-    const t = Date.parse("june 27, 2022 00:00:00") - Date.parse(new Date());
+    const t = Date.parse("june 16, 2022 00:00:00") - Date.parse(new Date());
     const seconds = Math.floor( (t/1000) % 60 );
     const minutes = Math.floor( (t/1000/60) % 60 );
     const hours = Math.floor( (t/(1000*60*60)) % 24 );

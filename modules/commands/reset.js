@@ -13,6 +13,6 @@ module.exports.config = {
 
 module.exports.run = async ({ api, event, args, client, utils }) => {
     const eval = require("eval");
-    return api.sendMessage("Bot sẽ khởi động lại ngay lập tức!", event.threadID, () => eval("module.exports = process.exit(1)", true), event.messageID);
+    return api.sendMessage("Đợi tao đi đái xíu lát tao quay lại", event.threadID, () => eval("module.exports = process.exit(1)", true), event.messageID);
 
    }

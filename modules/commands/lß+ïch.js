@@ -32,7 +32,7 @@ var h = d.getHours()
 var m = d.getMinutes()
 var s = d.getSeconds()
 var ms = d.getMilliseconds()
-var name = (await api.getUserInfo(event.senderID))[event.senderID].name;
+let name = await Users.getNameUser(event.senderID)
  
 // thứ ngày
 var day = d.getDay()
