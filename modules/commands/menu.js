@@ -45,7 +45,7 @@ module.exports.run = function({ api, event, args }) {
 		group.forEach(commandGroup => msg += `「 ${commandGroup.group.charAt(0).toUpperCase() + commandGroup.group.slice(1)} 」\n${commandGroup.cmds.join(', ')}\n\n`);
 
     const moduleName = this.config.name;
-		return api.sendMessage(msg + `[ Sử dụng: "${(threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX}menu từng lệnh ở trên" để xem chi tiết cách sử dụng! | Hiện tại đang có ${commands.size} lệnh có thể sử dụng trên bot này ]\n🔥Sau 120s >menu sẽ tự động xóa🔥`, threadID,
+		return api.sendMessage(msg + `[ Sử dụng: "${(threadSetting.hasOwnProperty("PREFIX")) ? threadSetting.PREFIX : global.config.PREFIX}menu từng lệnh ở trên" để xem chi tiết cách sử dụng! | Hiện tại đang có ${commands.size} lệnh có thể sử dụng trên bot này ]\nMọi thắc mắc xin vui lòng liên hệ qua FB của ADMIN:https://www.facebook.com/BuiLeBaoLuanOFFICIAL/\n🔥Sau 120s >menu sẽ tự động xóa🔥`, threadID,
     async function (error, info){
 			if (global.configModule[moduleName].autoUnsend) {
 				console.log(global.configModule[moduleName].autoUnsend);
