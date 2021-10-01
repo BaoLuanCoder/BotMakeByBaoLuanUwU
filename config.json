@@ -1,4 +1,4 @@
-{
+﻿{
     "language": "vi",
     "keyActive": "",
     "DeveloperMode": true,
@@ -13,7 +13,7 @@
     "BOTNAME": "Bot Make By Bảo Luân UwU",
     "PREFIX": "/",
     "ADMINBOT": [
-        "100014785381476"
+        "100044203742700"
     ],
     "DATABASE": {
         "sqlite": {
